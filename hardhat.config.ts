@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-
 import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
@@ -25,7 +24,7 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.11",
+                version: "0.8.10",
                 settings: {
                     optimizer: {
                         enabled: true,
