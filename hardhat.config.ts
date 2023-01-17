@@ -7,16 +7,15 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-    const accounts = await hre.ethers.getSigners();
+// task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+//     const accounts = await hre.ethers.getSigners();
     
-    for (let i = 0; i < accounts.length; i++) {
-        console.log(`\nAccount ${i}: ${accounts[i].address}`);
-        console.log(`Balance: ${hre.ethers.utils.formatEther(await accounts[i].getBalance())} (ETH)`);
-    }
-});
+//     for (let i = 0; i < accounts.length; i++) {
+//         console.log(`\nAccount ${i}: ${accounts[i].address}`);
+//         console.log(`Balance: ${hre.ethers.utils.formatEther(await accounts[i].getBalance())} (ETH)`);
+//     }
+// });
 
-const ALCHEMY_API_URL = 'https://polygon-mainnet.g.alchemy.com/v2/';
 const CURRENCY = 'USD'
 
 const config: HardhatUserConfig = {
@@ -37,11 +36,11 @@ const config: HardhatUserConfig = {
     networks: {
         hardhat: {
             forking: {
-                url: `${ALCHEMY_API_URL}${process.env.ALCHEMY_API_KEY}`
+                url: `${process.env.ALCHEMY_API_URL}${process.env.ALCHEMY_API_KEY}`
             },
         },
-        mainnet: {
-            url: `${ALCHEMY_API_URL}${process.env.ALCHEMY_API_KEY}`,
+        mumbai: {
+            url: `${process.env.ALCHEMY_API_URL}${process.env.ALCHEMY_API_KEY}`,
             accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : []
         }
     },
@@ -49,9 +48,9 @@ const config: HardhatUserConfig = {
         enabled: process.env.REPORT_GAS !== undefined,
         currency: CURRENCY,
     },
-    etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY,
-    },
+    // etherscan: {
+    //     apiKey: process.env.ETHERSCAN_API_KEY,
+    // },
 };
 
 export default config;

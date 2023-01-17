@@ -1,4 +1,3 @@
-// contracts/FlashLoan.sol
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
@@ -6,39 +5,30 @@ import {FlashLoanSimpleReceiverBase} from "@aave/core-v3/contracts/flashloan/bas
 import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
 import {IERC20} from "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol";
 
-interface IDex {
-    function depositUSDC(uint256 _amount) external;
-
-    function depositDAI(uint256 _amount) external;
-
-    function buyDAI() external;
-
-    function sellDAI() external;
-}
+import {IDex} from "./interfaces/IDex.sol";
 
 contract FlashLoanArbitrage is FlashLoanSimpleReceiverBase {
     address payable owner;
 
-    // Aave ERC20 Token addresses on Goerli network
     address private immutable daiAddress =
-        0xDF1742fE5b0bFc12331D8EAec6b478DfDbD31464;
+        0x2A5Acddb524B9454204Ed54EAB51Faf24250a397;
     address private immutable usdcAddress =
-        0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;
-    address private dexContractAddress =
-        0xD6e8c479B6B62d8Ce985C0f686D39e96af9424df;
+        0x30Ce0bA21A92E14b889F4f31748650EFA8D4C860;
+
+    address private dexContractAddress;
 
     IERC20 private dai;
     IERC20 private usdc;
     IDex private dexContract;
 
-    constructor(address _addressProvider)
+    constructor(address _addressProvider, address _dexContractAddress)
         FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider))
     {
         owner = payable(msg.sender);
 
         dai = IERC20(daiAddress);
         usdc = IERC20(usdcAddress);
-        dexContract = IDex(dexContractAddress);
+        dexContract = IDex(_dexContractAddress);
     }
 
     /**
