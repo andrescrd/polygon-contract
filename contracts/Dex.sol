@@ -6,10 +6,10 @@ import {IERC20} from "@aave/core-v3/contracts/dependencies/openzeppelin/contract
 contract Dex {
     address payable public owner;
 
-    // Aave ERC20 Token addresses on Goerli network
-    address private immutable daiAddress =
-        0x2A5Acddb524B9454204Ed54EAB51Faf24250a397;
-    address private immutable usdcAddress =
+    // Aave ERC20 Token addresses on Mumbai network
+    address private immutable token0Address =
+        0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B;
+    address private immutable token1Address =
         0x30Ce0bA21A92E14b889F4f31748650EFA8D4C860;
 
     IERC20 private dai;
@@ -27,8 +27,8 @@ contract Dex {
 
     constructor() {
         owner = payable(msg.sender);
-        dai = IERC20(daiAddress);
-        usdc = IERC20(usdcAddress);
+        dai = IERC20(token0Address);
+        usdc = IERC20(token1Address);
     }
 
     function depositUSDC(uint256 _amount) external {
